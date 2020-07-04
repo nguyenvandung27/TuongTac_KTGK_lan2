@@ -1,0 +1,65 @@
+﻿@model IEnumerable<MVC.Models.Phone>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+    <a href="@Url.Action("AddOrEdit","Phones")" class="btn btn-default"><i class="fa fa-plus"></i> Create New</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GeneralNote)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Model)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GeneralNote)
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |*@
+            <a href="@Url.Action("AddOrEdit", "Phones", new { id = item.Id})" class="btn btn-default"><i class="fa fa-pencil"></i>  Sửa</a> |
+            @*@Html.ActionLink("Details", "Details", new { id=item.Id })*@ 
+            <a href="@Url.Action("Details", "Phones", new { id = item.Id})"class="btn btn-default"><i class="fa fa-pencil"></i> Liệt kê</a>|
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            
+            
+        </td>
+    </tr>
+}
+
+</table>
+@section scripts{
+    <script>
+        $(function () {
+            var successMessage = '@TempData["SuccessMessage"]'
+            if (successMessage != '')
+                alertify.success(successMessage);
+        });
+
+        function Delete(id) {
+            alertify.confirm('Web Api CRUD Operations','Are You Sure to Delete this Record ?',function(){
+                window.location.href  = '@Url.Action("Delete","Phones")/'+id;
+            },null );
+        }
+    </script>
+}
